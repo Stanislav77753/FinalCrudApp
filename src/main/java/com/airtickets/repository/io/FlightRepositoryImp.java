@@ -21,7 +21,8 @@ public class FlightRepositoryImp implements FlightRepository {
             } catch (FileEmptyException e) {
                 id = 1L;
             }
-            out.write(id + ","  + flight.getDate() + "," + flight.getRouteId() + "\r\n");
+            out.write(id + ","  + flight.getDate() + "," + flight.getRouteId() + "," + flight.getBoughtEconomy()
+                    + "," + flight.getBoughtBusiness()+ "\r\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,7 +35,24 @@ public class FlightRepositoryImp implements FlightRepository {
 
     @Override
     public void update(Flight flight) {
-
+        List<String> flightsList = null;
+        try {
+            flightsList = getAllFlights();
+        } catch (FileEmptyException e) {
+        }
+        try(BufferedWriter out = new BufferedWriter(new FileWriter(flights))) {
+            for(String flightString: flightsList){
+                String[] flightArray = flightString.split(",");
+                if(flight.getDate().equals(flightArray[1]) && flight.getRouteId().equals(new Long(flightArray[2]))){
+                    out.write(flightArray[0] + ","  + flight.getDate() + "," + flight.getRouteId() + ","
+                            + flight.getBoughtEconomy() + "," + flight.getBoughtBusiness() + "\r\n");
+                }else{
+                    out.write(flightString + "\r\n");
+                }
+            }
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

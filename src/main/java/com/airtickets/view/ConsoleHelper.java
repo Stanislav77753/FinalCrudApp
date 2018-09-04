@@ -1,10 +1,7 @@
 package main.java.com.airtickets.view;
 
 import main.java.com.airtickets.controller.UserController;
-import main.java.com.airtickets.exceptions.CloseCommandException;
-import main.java.com.airtickets.exceptions.FileEmptyException;
-import main.java.com.airtickets.exceptions.IncorrectCommandException;
-import main.java.com.airtickets.exceptions.UnknownCommandException;
+import main.java.com.airtickets.exceptions.*;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.validator.Validator;
 import main.java.com.airtickets.view.command.loginmenu.LoginCommand;
@@ -90,6 +87,8 @@ public class ConsoleHelper {
             System.out.println(e.getMessage());
         } catch (IncorrectCommandException e) {
             System.out.println(e.getMessage());
+        } catch (IncorrectSearchTypeException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -135,6 +134,15 @@ public class ConsoleHelper {
             return loginCommandFactory.createCommand(user);
         }else if(commandName.equals("create new flight")){
             loginCommandFactory = new CreateFlightComFactory();
+            return loginCommandFactory.createCommand(user);
+        }else if(commandName.equals("find flight")){
+            loginCommandFactory = new FindFlightComFactory();
+            return loginCommandFactory.createCommand(user);
+        }else if(commandName.equals("buy ticket")){
+            loginCommandFactory = new BuyTicketComFactory();
+            return loginCommandFactory.createCommand(user);
+        }else if(commandName.equals("return ticket")){
+            loginCommandFactory = new ReturnTicketComFactory();
             return loginCommandFactory.createCommand(user);
         }else{
             throw new UnknownCommandException("You entered unknown command");
@@ -194,11 +202,22 @@ public class ConsoleHelper {
             System.out.println("Enter price on business seats");
             parametr = scanner.nextLine().trim();
         }else if(parametrName.equals("date")){
-            System.out.println("Enter date for flight");
+            System.out.println("Enter date. Example \"01/01/2018\"");
+            parametr = scanner.nextLine().trim();
+        }else if(parametrName.equals("route")){
+            System.out.println("Enter route. Example \"Moscow - Kiev\"");
+            parametr = scanner.nextLine().trim();
+        }else if(parametrName.equals("searchType")){
+            System.out.println("Enter search type to find (route or date)");
+            parametr = scanner.nextLine().trim();
+        }else if(parametrName.equals("seatsType")){
+            System.out.println("Enter sets type (economy or business)");
             parametr = scanner.nextLine().trim();
         }
         return parametr;
     }
+
+
 
     public static Double addBalance(){
         Double balance;

@@ -8,7 +8,7 @@ public class User extends NamedEntity {
     private String login;
     private String password;
     private String lastName;
-    private List<Long> tickets;
+    private List<Long> ticketsId;
     private Double balance;
     public User(Long id, String login, String password, String name, String lastName) {
         super(id, name);
@@ -16,7 +16,7 @@ public class User extends NamedEntity {
         this.login = login;
         this.password = password;
         this.lastName = lastName;
-        tickets = new ArrayList<>();
+        ticketsId = new ArrayList<>();
         this.balance = 0.0;
     }
 
@@ -37,7 +37,7 @@ public class User extends NamedEntity {
     }
 
     public List<Long> getTickets() {
-        return tickets;
+        return ticketsId;
     }
 
     public Integer getRoleId() {
@@ -64,6 +64,18 @@ public class User extends NamedEntity {
         this.balance += balance;
     }
 
+    public void addTicketsId(Long ticketsId) {
+        this.ticketsId.add(ticketsId);
+    }
+
+    public void decrementBalance(Double price){
+        this.balance -= price;
+    }
+
+    public void incrementBalance(Double price){
+        this.balance += price;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -71,7 +83,7 @@ public class User extends NamedEntity {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", tickets=" + tickets +
+                ", tickets=" + ticketsId +
                 ", balance=" + balance +
                 '}';
     }

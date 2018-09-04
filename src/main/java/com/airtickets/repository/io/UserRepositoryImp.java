@@ -5,11 +5,11 @@ import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.repository.UsersRepository;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepositoryImp implements UsersRepository {
     private File users = new File("src/main/resources/users.txt");
+
     @Override
     public void save(User user) {
         Long id;
@@ -46,9 +46,8 @@ public class UserRepositoryImp implements UsersRepository {
     public void update(User user) {
         List<String> usersList = null;
         try {
-            usersList = getAll(users);
+            usersList = getAllUsers();
         } catch (FileEmptyException e) {
-            e.printStackTrace();
         }
         try(BufferedWriter out = new BufferedWriter(new FileWriter(users))) {
             for(String userString: usersList){
@@ -64,6 +63,5 @@ public class UserRepositoryImp implements UsersRepository {
         }  catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
