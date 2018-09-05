@@ -1,6 +1,5 @@
 package main.java.com.airtickets.view;
 
-import main.java.com.airtickets.controller.UserController;
 import main.java.com.airtickets.exceptions.*;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.validator.Validator;
@@ -14,6 +13,10 @@ import java.util.Scanner;
 public class ConsoleHelper {
     static Scanner scanner = new Scanner(System.in);
 
+    public void startApp(){
+        mainMenu();
+    }
+
     /**
      * This method create main menu...
      */
@@ -24,12 +27,12 @@ public class ConsoleHelper {
             System.out.println("if you have an account enter login, otherwise enter registration");
             System.out.println("for to close program enter \"close\"");
             try {
-                command = enterString();
+                command = enterString("command");
                 if(!command.equals("login") && !command.equals("registration") && !command.equals("close")){
                     throw new IncorrectCommandException("You enter incorrect command");
                 }
                 executeCommand(command, "main", null);
-            } catch (CloseCommandException e) {
+            } catch (CloseCommandException | LogoutCommandExceprion e) {
                 break;
             } catch (IncorrectCommandException e){
                 System.out.println(e.getMessage());
@@ -37,16 +40,6 @@ public class ConsoleHelper {
         }while(true);
     }
 
-    private static String enterString(){
-        String command;
-        do{
-            command = scanner.nextLine().toLowerCase().trim();
-            if(!command.equals("")){
-                break;
-            }
-        }while (true);
-        return command;
-    }
     /**
      * This method create login menu...
      * */
@@ -56,17 +49,35 @@ public class ConsoleHelper {
         do{
             System.out.println("for to logout enter command \"logout\"");
             try {
-                command = enterString();
+                command = enterString("command");
                 if(command.equals("login") || command.equals("registration") || command.equals("close")){
                     throw new IncorrectCommandException("You enter incorrect command");
                 }
                 executeCommand(command, "login" ,user);
             } catch (CloseCommandException e) {
-                break;
+                System.out.println(e.getMessage());
             } catch (IncorrectCommandException e){
                 System.out.println(e.getMessage());
+            } catch (LogoutCommandExceprion logoutCommandExceprion) {
+                break;
             }
         }while(true);
+    }
+
+    public static String enterString(String string){
+        String returnString;
+        if(string.equals("command")){
+            do{
+                returnString = scanner.nextLine().toLowerCase().trim();
+                if(!returnString.equals("")){
+                    break;
+                }
+            }while (true);
+        }else{
+            System.out.println("Enter your login");
+            returnString = scanner.nextLine().trim();
+        }
+        return returnString;
     }
 
     /**
@@ -76,7 +87,7 @@ public class ConsoleHelper {
      * @param user
      * @throws CloseCommandException
      */
-    public static void executeCommand(String commandName, String menu, User user) throws CloseCommandException {
+    public static void executeCommand(String commandName, String menu, User user) throws CloseCommandException, LogoutCommandExceprion {
         try {
             if(menu.equals("main")){
                 createCommandByMainMenu(commandName).execute();
@@ -149,13 +160,10 @@ public class ConsoleHelper {
         }
     }
 
-    public static String enterLogin(){
-        System.out.println("Enter your login");
-        return  scanner.nextLine().trim();
-    }
 
 
-    public static String enterEntityParametrs(String parametrName){
+
+    public static String enterEntityParametrs(String parametrName) throws CloseCommandException {
         String parametr = null;
         String str;
         if(parametrName.equals("password")){
@@ -165,6 +173,8 @@ public class ConsoleHelper {
                 if(Validator.checkPassword(str)){
                     parametr = str;
                     break;
+                }else{
+                    System.out.println("You entered not valid password");
                 }
             }while (true);
         }else if(parametrName.equals("name")){
@@ -174,6 +184,8 @@ public class ConsoleHelper {
                 if(Validator.checkName(str)){
                     parametr = str;
                     break;
+                }else{
+                    System.out.println("You entered not valid name");
                 }
             }while (true);
         }else if(parametrName.equals("lastname")){
@@ -183,6 +195,8 @@ public class ConsoleHelper {
                 if(Validator.checkName(str)){
                     parametr = str;
                     break;
+                }else{
+                    System.out.println("You entered not valid last name");
                 }
             }while (true);
         }else if(parametrName.equals("routeName")){
@@ -213,21 +227,33 @@ public class ConsoleHelper {
         }else if(parametrName.equals("seatsType")){
             System.out.println("Enter sets type (economy or business)");
             parametr = scanner.nextLine().trim();
+        }else if(parametrName.equals("add money")){
+            do{
+                System.out.println("Enter count of money");
+                str = scanner.nextLine().trim();
+                if(str.equals("skip to login menu")){
+                    throw new CloseCommandException("You left menu of adding money");
+                }
+                if(Validator.checkMoney(str)){
+                    parametr = str;
+                    break;
+                }else{
+                    System.out.println("You entered not valid value of money");
+                }
+            }while (true);
+        }else if(parametrName.equals("command")){
+            do{
+                parametr = scanner.nextLine().toLowerCase().trim();
+                if(!parametr.equals("")){
+                    break;
+                }
+            }while (true);
+        }else if(parametrName.equals("login")){
+            System.out.println("Enter your login");
+            parametr = scanner.nextLine().trim();
         }
         return parametr;
     }
 
 
-
-    public static Double addBalance(){
-        Double balance;
-        System.out.println("Enter count of money");
-        balance = scanner.nextDouble();
-        return balance;
-    }
-
-
-    public void startApp(){
-        mainMenu();
-    }
 }

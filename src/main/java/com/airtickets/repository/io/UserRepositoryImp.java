@@ -20,7 +20,7 @@ public class UserRepositoryImp implements UsersRepository {
                 id = 1L;
             }
             out.write(id + ","  + user.getLogin() + "," + user.getPassword() + "," + user.getRoleId() + ","
-                    + user.getName()+ "," + user.getLastName() + "," + user.getBalance() + "," + user.getTickets()
+                    + user.getName()+ "," + user.getLastName() + "," + "0.0" + "," + "[]"
                     +  "\r\n");
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,9 +55,22 @@ public class UserRepositoryImp implements UsersRepository {
                 if(!user.getLogin().equals(userArray[1])){
                   out.write(userString + "\r\n");
                 }else{
+                    List<Long> tickets = user.getTickets();
+                    String userTickets;
+                    if(tickets.size() == 0){
+                        userTickets = "[]";
+                    }else{
+                        StringBuffer strTickets = new StringBuffer();
+                        for(Long ticket: tickets){
+                            System.out.println(ticket);
+                            strTickets.append(ticket + ";");
+                        }
+                        int lastIndex = strTickets.length() - 1;
+                        userTickets = "[" + strTickets.substring(0, lastIndex) + "]";
+                    }
                     out.write(userArray[0] + ","  + user.getLogin() + "," + user.getPassword() + ","
                             + user.getRoleId() + "," + user.getName()+ "," + user.getLastName() + ","
-                            + user.getBalance() + "," + user.getTickets() + "\r\n");
+                            + user.getBalance() + "," + userTickets + "\r\n");
                 }
             }
         }  catch (IOException e) {

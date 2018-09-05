@@ -27,21 +27,21 @@ public class Flight extends BaseEntity {
         return boughtEconomy;
     }
 
-    public void decrementBoughtEconomy(Integer boughtEconomy) {
-        this.boughtEconomy -= boughtEconomy;
+    public void decrementBoughtEconomy() {
+        this.boughtEconomy--;
     }
-    public void incrementBoughtEconomy(Integer boughtEconomy) {
-        this.boughtEconomy += boughtEconomy;
+    public void incrementBoughtEconomy() {
+        this.boughtEconomy++;
     }
 
     public Integer getBoughtBusiness() {
         return boughtBusiness;
     }
 
-    public void decrementBoughtBusiness(Integer boughtBusiness) {
-        this.boughtBusiness -= boughtBusiness;
+    public void decrementBoughtBusiness() {
+        this.boughtBusiness--;
     }
-    public void incrementBoughtBusiness(Integer boughtBusiness) {
-        this.boughtBusiness += boughtBusiness;
+    public void incrementBoughtBusiness() {
+        this.boughtBusiness++;
     }
 }

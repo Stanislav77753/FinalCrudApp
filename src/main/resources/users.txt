@@ -1,2 +1,1 @@
-1,login1,password,1,Stas,Popovich,12000.0,[1]
-2,logalina,password,0,Alina,Popovich,5000.0,[]
+1,login1,password,0,stas,popovich,191000.0,[1;3]

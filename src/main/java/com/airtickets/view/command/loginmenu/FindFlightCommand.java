@@ -3,6 +3,7 @@ package main.java.com.airtickets.view.command.loginmenu;
 
 import main.java.com.airtickets.controller.FlightController;
 import main.java.com.airtickets.controller.RouteController;
+import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.exceptions.EntityNotExistsException;
 import main.java.com.airtickets.exceptions.FileEmptyException;
 import main.java.com.airtickets.exceptions.IncorrectSearchTypeException;
@@ -21,7 +22,7 @@ public class FindFlightCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws IncorrectSearchTypeException {
+    public void execute() throws IncorrectSearchTypeException, CloseCommandException {
         try {
             List<String> flights = flightController.getAllFlights();
             String searchType = ConsoleHelper.enterEntityParametrs("searchType");

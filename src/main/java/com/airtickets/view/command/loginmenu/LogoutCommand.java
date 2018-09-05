@@ -1,7 +1,7 @@
 package main.java.com.airtickets.view.command.loginmenu;
 
 import main.java.com.airtickets.controller.UserController;
-import main.java.com.airtickets.exceptions.CloseCommandException;
+import main.java.com.airtickets.exceptions.LogoutCommandExceprion;
 import main.java.com.airtickets.model.User;
 
 public class LogoutCommand implements LoginCommand {
@@ -13,8 +13,8 @@ public class LogoutCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws CloseCommandException {
+    public void execute() throws LogoutCommandExceprion {
         userController.updateUser(user);
-        throw new CloseCommandException("logout");
+        throw new LogoutCommandExceprion("logout");
     }
 }

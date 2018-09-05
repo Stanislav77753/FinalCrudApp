@@ -54,6 +54,17 @@ public class UserService {
                     userByLogin.setName(userParametrs[4]);
                     userByLogin.setLastName(userParametrs[5]);
                     userByLogin.setBalance(new Double(userParametrs[6]));
+                    if(userParametrs[7].trim().length() > 2 && userParametrs[7].trim().length() < 4){
+                        String tickets = userParametrs[7].substring(1, 2);
+                        userByLogin.addTicketsId(new Long(tickets));
+                    }else if(userParametrs[7].trim().length() > 3 ){
+                        int lastIndex = userParametrs[7].trim().length() - 1;
+                        String tickets = userParametrs[7].substring(1, lastIndex - 1);
+                        String[] ticketsArray = tickets.split(";");
+                        for(String str: ticketsArray){
+                            userByLogin.addTicketsId(new Long(str));
+                        }
+                    }
                 }
             }
         } catch (FileEmptyException e) {

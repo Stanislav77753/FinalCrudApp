@@ -1,5 +1,6 @@
 package main.java.com.airtickets.view.command.loginmenu;
 
+import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
 
@@ -11,8 +12,8 @@ public class DepositMoneyCommand implements LoginCommand {
     }
 
     @Override
-    public void execute(){
-        this.user.setBalance(ConsoleHelper.addBalance());
+    public void execute() throws CloseCommandException {
+        this.user.setBalance(new Double(ConsoleHelper.enterEntityParametrs("add money")));
     }
 
 }

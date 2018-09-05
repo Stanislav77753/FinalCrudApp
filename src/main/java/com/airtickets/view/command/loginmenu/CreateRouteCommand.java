@@ -34,12 +34,14 @@ public class CreateRouteCommand implements LoginCommand {
                 createFlag = false;
             } catch (EntityAlreadyExistsException e) {
                 e.printStackTrace();
+            } catch (CloseCommandException e) {
+                e.printStackTrace();
             }
         }while (createFlag);
 
     }
 
-    public String createRoute() throws EntityAlreadyExistsException {
+    public String createRoute() throws EntityAlreadyExistsException, CloseCommandException {
         String route = "0" + "," + ConsoleHelper.enterEntityParametrs("routeName") + ","
                 + ConsoleHelper.enterEntityParametrs("seatsEconomy") + ","
                 + ConsoleHelper.enterEntityParametrs("seatsBusiness") + ","

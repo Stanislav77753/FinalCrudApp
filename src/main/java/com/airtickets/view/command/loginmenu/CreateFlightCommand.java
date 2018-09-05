@@ -3,6 +3,7 @@ package main.java.com.airtickets.view.command.loginmenu;
 
 import main.java.com.airtickets.controller.FlightController;
 import main.java.com.airtickets.controller.RouteController;
+import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.exceptions.EntityNotExistsException;
 import main.java.com.airtickets.exceptions.FileEmptyException;
 import main.java.com.airtickets.exceptions.IncorrectCommandException;
@@ -20,7 +21,7 @@ public class CreateFlightCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws IncorrectCommandException {
+    public void execute() throws IncorrectCommandException, CloseCommandException {
         if(!user.getRoleId().equals(new Integer("1"))){
             throw new IncorrectCommandException("Incorrect command");
         }

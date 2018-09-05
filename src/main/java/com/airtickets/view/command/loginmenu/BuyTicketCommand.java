@@ -3,6 +3,7 @@ package main.java.com.airtickets.view.command.loginmenu;
 import main.java.com.airtickets.controller.FlightController;
 import main.java.com.airtickets.controller.RouteController;
 import main.java.com.airtickets.controller.TicketController;
+import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.exceptions.FileEmptyException;
 import main.java.com.airtickets.exceptions.IncorrectCommandException;
 import main.java.com.airtickets.model.Flight;
@@ -24,7 +25,7 @@ public class BuyTicketCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws IncorrectCommandException {
+    public void execute() throws IncorrectCommandException, CloseCommandException {
         String date = ConsoleHelper.enterEntityParametrs("date");
         String route = ConsoleHelper.enterEntityParametrs("route");
         String seatsType = ConsoleHelper.enterEntityParametrs("seatsType");
@@ -34,7 +35,7 @@ public class BuyTicketCommand implements LoginCommand {
         try {
             List<String> allRoutes = routeController.getAllRoutes();
             List<String> allFlights = flightController.getAllFlights();
-            Long ticketId = 0L;
+            Long ticketId = 1L;
             try{
                 List<String> tickets = ticketController.getAllTickets();
                 for(String  str : tickets){
@@ -66,9 +67,9 @@ public class BuyTicketCommand implements LoginCommand {
                             user.decrementBalance(ticket.getPrice());
                             flight = new Flight(new Long(flightArray[0]), flightArray[1], new Long(flightArray[2]));
                             if(ticket.getType().equals("economy")){
-                                flight.incrementBoughtEconomy(1);
+                                flight.incrementBoughtEconomy();
                             }else{
-                                flight.incrementBoughtBusiness(1);
+                                flight.incrementBoughtBusiness();
                             }
                             flightController.updateFlight(flight);
                         }
