@@ -10,6 +10,7 @@ import main.java.com.airtickets.exceptions.IncorrectCommandException;
 import main.java.com.airtickets.model.Flight;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
+import main.java.com.airtickets.view.command.Commands;
 
 public class CreateFlightCommand implements LoginCommand {
     private User user;
@@ -29,9 +30,9 @@ public class CreateFlightCommand implements LoginCommand {
         boolean chechFlag = true;
         do{
             try {
-                route = routeController.getRouteByName(ConsoleHelper.enterEntityParametrs("routeName")).
+                route = routeController.getRouteByName(ConsoleHelper.enterEntityParametrs(Commands.RouteName)).
                         split(",");
-                flightController.createFlight(new Flight(null, ConsoleHelper.enterEntityParametrs("date"),
+                flightController.createFlight(new Flight(null, ConsoleHelper.enterEntityParametrs(Commands.Date),
                         new Long(route[0])));
                 chechFlag = false;
             } catch (EntityNotExistsException e) {

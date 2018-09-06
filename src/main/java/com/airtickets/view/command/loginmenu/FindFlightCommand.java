@@ -9,6 +9,7 @@ import main.java.com.airtickets.exceptions.FileEmptyException;
 import main.java.com.airtickets.exceptions.IncorrectSearchTypeException;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
+import main.java.com.airtickets.view.command.Commands;
 
 import java.util.List;
 
@@ -25,11 +26,11 @@ public class FindFlightCommand implements LoginCommand {
     public void execute() throws IncorrectSearchTypeException, CloseCommandException {
         try {
             List<String> flights = flightController.getAllFlights();
-            String searchType = ConsoleHelper.enterEntityParametrs("searchType");
+            String searchType = ConsoleHelper.enterEntityParametrs(Commands.SearchType);
             if(searchType.equals("route")){
                 boolean routeFlag = false;
                 String[] route = routeController.getRouteByName(ConsoleHelper.
-                        enterEntityParametrs("route")).split(",");
+                        enterEntityParametrs(Commands.RouteName)).split(",");
                 for(String flight: flights){
                     String[] flightArray = flight.split(",");
                     if(flightArray[2].equals(route[0])){
@@ -44,7 +45,7 @@ public class FindFlightCommand implements LoginCommand {
                     System.out.println("this flight is not exists");
                 }
             }else if(searchType.equals("date")){
-                String date = ConsoleHelper.enterEntityParametrs("date");
+                String date = ConsoleHelper.enterEntityParametrs(Commands.Date);
                 List<String> routes = routeController.getAllRoutes();
                 boolean flagDate = false;
                 for(String flight: flights){

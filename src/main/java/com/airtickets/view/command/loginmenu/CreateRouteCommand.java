@@ -8,6 +8,7 @@ import main.java.com.airtickets.exceptions.IncorrectCommandException;
 import main.java.com.airtickets.model.Route;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
+import main.java.com.airtickets.view.command.Commands;
 
 import java.util.List;
 
@@ -42,11 +43,11 @@ public class CreateRouteCommand implements LoginCommand {
     }
 
     public String createRoute() throws EntityAlreadyExistsException, CloseCommandException {
-        String route = "0" + "," + ConsoleHelper.enterEntityParametrs("routeName") + ","
-                + ConsoleHelper.enterEntityParametrs("seatsEconomy") + ","
-                + ConsoleHelper.enterEntityParametrs("seatsBusiness") + ","
-                + ConsoleHelper.enterEntityParametrs("seatsEconomyPrice") + ","
-                + ConsoleHelper.enterEntityParametrs("seatsBusinessPrice");
+        String route = "0" + "," + ConsoleHelper.enterEntityParametrs(Commands.RouteName) + ","
+                + ConsoleHelper.enterEntityParametrs(Commands.SeatsEconomy) + ","
+                + ConsoleHelper.enterEntityParametrs(Commands.SeatsBusiness) + ","
+                + ConsoleHelper.enterEntityParametrs(Commands.SeatsEconomyPrice) + ","
+                + ConsoleHelper.enterEntityParametrs(Commands.SeatsBusinessPrice);
         if(checkRoute(route)){
             return route;
         }else{

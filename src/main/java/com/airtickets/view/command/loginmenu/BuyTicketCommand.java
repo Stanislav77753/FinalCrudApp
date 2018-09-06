@@ -10,6 +10,7 @@ import main.java.com.airtickets.model.Flight;
 import main.java.com.airtickets.model.Ticket;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
+import main.java.com.airtickets.view.command.Commands;
 
 import java.util.List;
 
@@ -25,10 +26,10 @@ public class BuyTicketCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws IncorrectCommandException, CloseCommandException {
-        String date = ConsoleHelper.enterEntityParametrs("date");
-        String route = ConsoleHelper.enterEntityParametrs("route");
-        String seatsType = ConsoleHelper.enterEntityParametrs("seatsType");
+    public void execute() throws IncorrectCommandException {
+        String date = ConsoleHelper.enterEntityParametrs(Commands.Date);
+        String route = ConsoleHelper.enterEntityParametrs(Commands.RouteName);
+        String seatsType = ConsoleHelper.enterEntityParametrs(Commands.SearchType);
         Double price;
         String name = user.getLastName() + " " + user.getName();
         Flight flight;

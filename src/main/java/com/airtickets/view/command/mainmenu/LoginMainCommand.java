@@ -14,7 +14,7 @@ public class LoginMainCommand extends MainCommand {
     private void login() throws CloseCommandException {
         String login = setLogin("login");
         String truePassword = userController.getPasswordByLogin(login);
-        String password = ConsoleHelper.enterEntityParametrs("password");
+        String password = setPaswword();
         if(password.equals(truePassword)){
             User user = userController.getUserByLogin(login);
             ConsoleHelper.loginMenu(user);

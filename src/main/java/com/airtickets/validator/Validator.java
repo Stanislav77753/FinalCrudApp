@@ -1,59 +1,73 @@
 package main.java.com.airtickets.validator;
 
-import main.java.com.airtickets.exceptions.FileEmptyException;
+import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.exceptions.IncorrectEntityException;
 
 import java.util.List;
 
 public class Validator {
 
-    public static boolean checkName(String name){
+    public static boolean checkName(String name) throws IncorrectEntityException, CloseCommandException {
         boolean checkFlag = true;
-        String[] strName = name.split("");
-        for(int i = 0; i < strName.length; i++){
-            if(!strName[i].matches("^\\D")){
-                checkFlag = false;
-                break;
+        if(name.equals("cancel")){
+            throw new CloseCommandException("You canceled \"registration\" operation");
+        }else{
+            String[] strName = name.split("");
+            for(int i = 0; i < strName.length; i++){
+                if(!strName[i].matches("^\\D")){
+                    throw new IncorrectEntityException("You entered not valid ");
+                }
             }
         }
         return checkFlag;
     }
 
-    public static boolean checkPassword(String password){
-        boolean checkFlag = false;
-        if(password.length() >= 8){
-            checkFlag = true;
+    public static boolean checkPassword(String password) throws IncorrectEntityException, CloseCommandException {
+        boolean checkFlag = true;
+        if(password.equals("cancel")){
+            throw new CloseCommandException("cancel");
+        }else{
+            if(password.length() < 8){
+                throw new IncorrectEntityException("Tou entered not valid password");
+            }
         }
         return checkFlag;
     }
 
-    public static boolean checkMoney(String money){
-        boolean checkFlag = false;
-        String[] strMoney = money.split("");
-        for(int i = 0; i < strMoney.length; i++){
-            if(!strMoney[i].matches("^\\D")){
-                if(!strMoney[i].equals(".")){
-                    checkFlag = false;
-                    break;
+    public static boolean checkMoney(String money) throws IncorrectEntityException, CloseCommandException {
+        boolean checkFlag;
+        if(money.equals("cancel")){
+            throw new CloseCommandException("You canceled \"add money\" operation");
+        }else{
+            String[] strMoney = money.split("");
+            for(int i = 0; i < strMoney.length; i++){
+                if(strMoney[i].matches("^\\D")){
+                    if(!strMoney[i].equals(".")){
+                        throw new IncorrectEntityException("You entered not valid value of money");
+                    }
                 }
             }
         }
         checkFlag = true;
         return checkFlag;
     }
-    public static boolean checkLogin(String login, List<String> logins) throws IncorrectEntityException {
+    public static boolean checkLogin(String login, List<String> logins) throws
+            IncorrectEntityException, CloseCommandException {
         boolean checkFlag = false;
-        if(!login.equals("")){
-            for(String log: logins){
-                if(login.equals(log)){
-                    checkFlag = true;
-                    break;
-                }
-            }
+        if(login.equals("cancel")){
+            throw new CloseCommandException("cancel");
         }else{
-            throw new IncorrectEntityException("You entered not valid login");
+            if(!login.equals("")){
+                for(String log: logins){
+                    if(login.equals(log)){
+                        checkFlag = true;
+                        break;
+                    }
+                }
+            }else{
+                throw new IncorrectEntityException("You entered not valid login");
+            }
         }
-
         return checkFlag;
     }
 }

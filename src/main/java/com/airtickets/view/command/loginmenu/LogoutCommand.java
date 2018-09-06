@@ -15,6 +15,6 @@ public class LogoutCommand implements LoginCommand {
     @Override
     public void execute() throws LogoutCommandExceprion {
         userController.updateUser(user);
-        throw new LogoutCommandExceprion("logout");
+        throw new LogoutCommandExceprion("You had logout");
     }
 }

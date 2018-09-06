@@ -1,3 +1,0 @@
-1,popovich stas,11/11/2018,1,economy,3000.0,
-2,popovich stas,11/11/2018,3,economy,3000.0,
-3,popovich stas,11/11/2018,1,economy,3000.0,
