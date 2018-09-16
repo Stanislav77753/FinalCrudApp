@@ -62,7 +62,6 @@ public class UserRepositoryImp implements UsersRepository {
                     }else{
                         StringBuffer strTickets = new StringBuffer();
                         for(Long ticket: tickets){
-                            System.out.println(ticket);
                             strTickets.append(ticket + ";");
                         }
                         int lastIndex = strTickets.length() - 1;

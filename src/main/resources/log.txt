@@ -1,0 +1,52 @@
+Sat Sep 15 23:01:17 MSK 2018 - Successful logging. Login - login1
+Sat Sep 15 23:01:27 MSK 2018 - Admin add new city - Moscow
+Sat Sep 15 23:01:40 MSK 2018 - Admin add new city - Saint - Petersburg
+Sat Sep 15 23:01:49 MSK 2018 - Admin add new city - Omsk
+Sat Sep 15 23:01:56 MSK 2018 - Admin add new city - Kiev
+Sat Sep 15 23:02:06 MSK 2018 - Admin add new city - Minsk
+Sat Sep 15 23:02:08 MSK 2018 - Successful logout. Login - login1
+Sat Sep 15 23:04:39 MSK 2018 - Successful logging. Login - login1
+Sat Sep 15 23:08:01 MSK 2018 - Successful logging. Login - login1
+Sat Sep 15 23:09:44 MSK 2018 - Successful logging. Login - login1
+Sat Sep 15 23:10:10 MSK 2018 - Successful logout. Login - login1
+Sat Sep 15 23:49:49 MSK 2018 - Successful logging. Login - login1
+Sat Sep 15 23:50:47 MSK 2018 - Successful logout. Login - login1
+Sat Sep 15 23:53:20 MSK 2018 - Successful logging. Login - login1
+Sat Sep 15 23:53:46 MSK 2018 - Admin add new route : Moscow - Kiev
+Sat Sep 15 23:54:03 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 00:11:53 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 00:13:28 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 00:46:06 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 00:58:08 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:32:58 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:35:32 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:36:11 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:37:53 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:49:49 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:50:21 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 10:53:03 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 10:53:24 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 11:21:36 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 11:23:38 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 11:24:14 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 11:24:36 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 13:39:18 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 13:40:01 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 13:42:08 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 13:42:55 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 13:46:21 MSK 2018 - Successful registration. Login - user1
+Sun Sep 16 13:47:29 MSK 2018 - Successful logout. Login - user1
+Sun Sep 16 13:52:24 MSK 2018 - Successful logging. Login - user1
+Sun Sep 16 13:53:13 MSK 2018 - Successful logout. Login - user1
+Sun Sep 16 13:53:20 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 13:53:44 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 13:54:21 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 13:54:48 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 14:10:37 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 14:10:59 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 14:11:45 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 14:12:07 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 14:23:17 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 14:23:39 MSK 2018 - Successful logout. Login - login1
+Sun Sep 16 14:28:12 MSK 2018 - Successful logging. Login - login1
+Sun Sep 16 14:28:34 MSK 2018 - Successful logout. Login - login1

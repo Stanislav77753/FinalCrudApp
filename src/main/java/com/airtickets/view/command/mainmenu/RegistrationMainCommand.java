@@ -2,6 +2,7 @@ package main.java.com.airtickets.view.command.mainmenu;
 import main.java.com.airtickets.controller.UserController;
 import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.exceptions.IncorrectEntityException;
+import main.java.com.airtickets.model.Logger;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.validator.Validator;
 import main.java.com.airtickets.view.ConsoleHelper;
@@ -13,8 +14,9 @@ public class RegistrationMainCommand extends MainCommand {
 
     @Override
     public void execute() throws CloseCommandException {
-        User user = new User(null, setLogin("registration"), setPaswword(), setName("name"),setName("lastname"));
+        User user = new User(null, setLogin("registration"), setPassword(), setName("name"),setName("lastname"));
         userController.createNewUser(user);
+        Logger.printLog("Successful registration. Login - " + user.getLogin());
         ConsoleHelper.loginMenu(user);
     }
 
@@ -24,13 +26,13 @@ public class RegistrationMainCommand extends MainCommand {
         do{
             try {
                 if(nameOrLastName.equals("name")){
-                    name = ConsoleHelper.enterEntityParametrs(Commands.Name);
+                    name = ConsoleHelper.enterEntityParametrs(Commands.NAME);
                 }else{
-                    name = ConsoleHelper.enterEntityParametrs(Commands.LastName);
+                    name = ConsoleHelper.enterEntityParametrs(Commands.LAST_NAME);
                 }
                 checkFlag = Validator.checkName(name);
             } catch (IncorrectEntityException e) {
-                System.out.println(e.getMessage() + nameOrLastName);;
+                System.out.println(e.getMessage() + "NAME OR LASTNAME");
             }
         }while (!checkFlag);
         return name;

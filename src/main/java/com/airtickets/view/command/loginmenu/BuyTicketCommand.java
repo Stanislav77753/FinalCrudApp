@@ -3,9 +3,7 @@ package main.java.com.airtickets.view.command.loginmenu;
 import main.java.com.airtickets.controller.FlightController;
 import main.java.com.airtickets.controller.RouteController;
 import main.java.com.airtickets.controller.TicketController;
-import main.java.com.airtickets.exceptions.CloseCommandException;
-import main.java.com.airtickets.exceptions.FileEmptyException;
-import main.java.com.airtickets.exceptions.IncorrectCommandException;
+import main.java.com.airtickets.exceptions.*;
 import main.java.com.airtickets.model.Flight;
 import main.java.com.airtickets.model.Ticket;
 import main.java.com.airtickets.model.User;
@@ -14,9 +12,8 @@ import main.java.com.airtickets.view.command.Commands;
 
 import java.util.List;
 
-public class BuyTicketCommand implements LoginCommand {
+public class BuyTicketCommand extends LoginCommand {
     private User user;
-    private Ticket ticket;
     private RouteController routeController = new RouteController();
     private FlightController flightController = new FlightController();
     private TicketController ticketController = new TicketController();
@@ -26,58 +23,90 @@ public class BuyTicketCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws IncorrectCommandException {
-        String date = ConsoleHelper.enterEntityParametrs(Commands.Date);
-        String route = ConsoleHelper.enterEntityParametrs(Commands.RouteName);
-        String seatsType = ConsoleHelper.enterEntityParametrs(Commands.SearchType);
-        Double price;
-        String name = user.getLastName() + " " + user.getName();
-        Flight flight;
+    public void execute() throws CloseCommandException {
+       createTicket();
+    }
+
+    private Double getPrice(String typeSeats, String route){
+        Double price = 0.0;
         try {
-            List<String> allRoutes = routeController.getAllRoutes();
-            List<String> allFlights = flightController.getAllFlights();
-            Long ticketId = 1L;
-            try{
-                List<String> tickets = ticketController.getAllTickets();
-                for(String  str : tickets){
-                    ticketId++;
-                }
-            }catch (FileEmptyException e) {
-                ticketId = 1L;
+            String[] routeArray = routeController.getRouteByName(route).split(",");
+            if(typeSeats.equals("economy")){
+                price = new Double(routeArray[4]);
+            }else{
+                price = new Double((routeArray[5]));
             }
+        } catch (EntityNotExistsException e) {
+            e.printStackTrace();
+        } catch (FileEmptyException e) {
+            e.printStackTrace();
+        }
+        return price;
+    }
 
+    private boolean checkBalance(Double price) throws BalanceException {
+        if(price > user.getBalance()){
+            throw new BalanceException("\u001B[31m" + "you don't have enough money");
+        }else{
+            return true;
+        }
+    }
 
-            for(String routes: allRoutes){
-                String[] routeArray = routes.split(",");
-                if(route.equals(routeArray[1])){
-                    for(String flights: allFlights){
-                        String[] flightArray = flights.split(",");
-                        if(date.equals(flightArray[1]) && routeArray[0].equals(flightArray[2])){
-                            if(seatsType.equals("economy")){
-                              price = new Double(routeArray[4]);
-                            }else if(seatsType.equals("business")){
-                                price = new Double(routeArray[5]);
-                            }
-                            else{
-                                throw new IncorrectCommandException("You enter incorrect type");
-                            }
-                            ticket = new Ticket(ticketId, date, new Long(flightArray[0]),seatsType, price);
-                            ticket.setUserName(name);
-                            ticketController.createTicket(ticket);
-                            user.addTicketsId(ticketId);
-                            user.decrementBalance(ticket.getPrice());
-                            flight = new Flight(new Long(flightArray[0]), flightArray[1], new Long(flightArray[2]));
-                            if(ticket.getType().equals("economy")){
-                                flight.incrementBoughtEconomy();
-                            }else{
-                                flight.incrementBoughtBusiness();
-                            }
-                            flightController.updateFlight(flight);
-                        }
+    private Long getIdForTicket(){
+        Long id = 1L;
+        try {
+            List<String> tickets = ticketController.getAllTickets();
+            for(String ticket: tickets){
+                id++;
+            }
+        } catch (FileEmptyException e) {
+            id = 1L;
+        }
+        return id;
+    }
+
+    private void createTicket() throws CloseCommandException {
+        String route = selectTicketParametr(Commands.ROUTE, routeController, flightController);
+        String date = selectTicketParametr(Commands.DATE, routeController, flightController);
+        try {
+            String ticketType = selectTypeTicket(route, date, routeController, flightController);
+            Double price = getPrice(ticketType, route);
+            if(checkBalance(price)){
+                Ticket ticket = new Ticket(getIdForTicket(),date, flightController.getId(date,
+                        routeController.getIdByRouteName(route)), ticketType,price);
+                ticket.setUserName(user.getLastName() + " " + user.getName());
+                ticketController.createTicket(ticket);
+                updateFlight(ticket);
+                user.decrementBalance(price);
+                user.addTicketsId(ticket.getId());
+            }
+        } catch (VacantTicketException | BalanceException e) {
+            System.out.println(e.getMessage());
+            throw new CloseCommandException("cancel");
+        } catch (FileEmptyException | EntityNotExistsException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void updateFlight(Ticket ticket){
+        try {
+            List<String> flights = flightController.getAllFlights();
+            for(String flight: flights){
+                String[] flightArray = flight.split(",");
+                if(new Long(flightArray[0]).equals(ticket.getFlightId())){
+                    Flight flightUpdate = new Flight(new Long(flightArray[0]), flightArray[1], new Long(flightArray[2]));
+                    flightUpdate.setBoughtEconomy(new Integer(flightArray[3]));
+                    flightUpdate.setBoughtBusiness(new Integer(flightArray[4]));
+                    if(ticket.getType().equals("economy")){
+                        flightUpdate.incrementBoughtEconomy();
+                    }else{
+                        flightUpdate.incrementBoughtBusiness();
                     }
+                    flightController.updateFlight(flightUpdate);
                 }
             }
         } catch (FileEmptyException e) {
         }
     }
+
 }

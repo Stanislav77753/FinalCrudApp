@@ -15,6 +15,14 @@ public class Flight extends BaseEntity {
         this.boughtBusiness = 0;
     }
 
+    public void setBoughtEconomy(Integer boughtEconomy) {
+        this.boughtEconomy = boughtEconomy;
+    }
+
+    public void setBoughtBusiness(Integer boughtBusiness) {
+        this.boughtBusiness = boughtBusiness;
+    }
+
     public String getDate() {
         return date;
     }

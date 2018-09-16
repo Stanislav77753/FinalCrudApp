@@ -26,6 +26,17 @@ public class RouteService {
                 return route;
             }
         }
-        throw new EntityNotExistsException("This route is not exist");
+        throw new EntityNotExistsException("\u001B[31m" + "THIS ROUTE IS NOT EXISTS");
+    }
+
+    public Long getIdByRouteName(String routeName) throws FileEmptyException, EntityNotExistsException {
+        List<String> routes = routeRepositoryImp.getAllRoutes();
+        for(String route: routes){
+            String[] routeArray = route.split(",");
+            if(routeArray[1].equals(routeName)){
+                return new Long(routeArray[0]);
+            }
+        }
+        throw new EntityNotExistsException("\u001B[31m" + "THIS ROUTE IS NOT EXISTS");
     }
 }

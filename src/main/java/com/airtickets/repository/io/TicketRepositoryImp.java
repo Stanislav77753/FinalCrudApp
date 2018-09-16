@@ -17,14 +17,8 @@ public class TicketRepositoryImp implements TicketRepository {
 
     @Override
     public void save(Ticket ticket) {
-        Long id;
         try(BufferedWriter out = new BufferedWriter(new FileWriter(tickets, true))) {
-            try {
-                id = getId(tickets) + 1L;
-            } catch (FileEmptyException e) {
-                id = 1L;
-            }
-            out.write(id + "," + ticket.getUserName() + "," + ticket.getDate() + "," + ticket.getFlightId()
+            out.write(ticket.getId() + "," + ticket.getUserName() + "," + ticket.getDate() + "," + ticket.getFlightId()
                     + "," + ticket.getType() + "," + ticket.getPrice() + "," +  "\r\n");
         } catch (IOException e) {
             e.printStackTrace();

@@ -7,7 +7,7 @@ import main.java.com.airtickets.validator.Validator;
 import main.java.com.airtickets.view.ConsoleHelper;
 import main.java.com.airtickets.view.command.Commands;
 
-public class DepositMoneyCommand implements LoginCommand {
+public class DepositMoneyCommand extends LoginCommand {
     private User user;
 
     public DepositMoneyCommand(User user) {
@@ -24,7 +24,7 @@ public class DepositMoneyCommand implements LoginCommand {
         boolean checkFlag = false;
         do {
             try {
-                balance = ConsoleHelper.enterEntityParametrs(Commands.AddMoney);
+                balance = ConsoleHelper.enterEntityParametrs(Commands.ADD_MONEY);
                 checkFlag = Validator.checkMoney(balance);
             } catch (IncorrectEntityException e) {
                 System.out.println(e.getMessage());

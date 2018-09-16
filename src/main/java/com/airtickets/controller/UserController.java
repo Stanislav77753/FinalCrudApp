@@ -28,4 +28,8 @@ public class UserController {
     public void updateUser(User user){
         userService.updateUser(user);
     }
+
+    public List<String> getAllTicketts(){
+        return userService.getAllTickets();
+    }
 }

@@ -1,5 +1,6 @@
 package main.java.com.airtickets.controller;
 
+import main.java.com.airtickets.exceptions.EntityNotExistsException;
 import main.java.com.airtickets.exceptions.FileEmptyException;
 import main.java.com.airtickets.model.Flight;
 import main.java.com.airtickets.service.FlightService;
@@ -19,5 +20,9 @@ public class FlightController {
 
     public void updateFlight(Flight flight){
         flightService.updateFlight(flight);
+    }
+
+    public Long getId(String date, Long routeId) throws FileEmptyException, EntityNotExistsException {
+        return flightService.getId(date, routeId);
     }
 }

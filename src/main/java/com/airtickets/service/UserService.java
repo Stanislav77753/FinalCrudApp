@@ -59,7 +59,7 @@ public class UserService {
                         userByLogin.addTicketsId(new Long(tickets));
                     }else if(userParametrs[7].trim().length() > 3 ){
                         int lastIndex = userParametrs[7].trim().length() - 1;
-                        String tickets = userParametrs[7].substring(1, lastIndex - 1);
+                        String tickets = userParametrs[7].substring(1, lastIndex);
                         String[] ticketsArray = tickets.split(";");
                         for(String str: ticketsArray){
                             userByLogin.addTicketsId(new Long(str));
@@ -75,4 +75,5 @@ public class UserService {
     public void updateUser(User user){
         userRepositoryImp.update(user);
     }
+
 }

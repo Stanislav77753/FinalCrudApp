@@ -1,0 +1,5 @@
+1,Moscow
+2,Saint - Petersburg
+3,Omsk
+4,Kiev
+5,Minsk

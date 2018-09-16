@@ -1,6 +1,7 @@
 package main.java.com.airtickets.repository;
 
 import main.java.com.airtickets.exceptions.FileEmptyException;
+import main.java.com.airtickets.model.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,35 +21,35 @@ public interface Repository<T, ID> {
             do{
                 entityString = in.readLine();
                 if(entityString == null && count == 0){
-                    throw new FileEmptyException("Database of users is empty!");
+                    throw new FileEmptyException("\u001B[31m" + "Database " + "\"" + fileName + "\"" + " is empty!");
                 }else if(entityString != null){
                     entityList.add(entityString);
                 }
                 count++;
             }while(entityString != null);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.printLog("File " + "\"" + fileName + "\"" + " not found");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return entityList;
     }
 
-    default Long getId(File file) throws FileEmptyException {
+    default Long getId(File fileName) throws FileEmptyException {
         Long id = 0L;
         String str;
-        try(BufferedReader in = new BufferedReader(new FileReader(file))){
+        try(BufferedReader in = new BufferedReader(new FileReader(fileName))){
             do{
                 str = in.readLine();
                 if(str == null && id == 0L){
-                    throw new FileEmptyException("Database of cities is empty!");
+                    throw new FileEmptyException("\u001B[31m" + "Database " + "\"" + fileName + "\"" + " is empty!");
                 }
                 else if(str != null){
                     id++;
                 }
             }while(str != null);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.printLog("File " + "\"" + fileName + "\"" + " not found");
         } catch (IOException e) {
             e.printStackTrace();
         }

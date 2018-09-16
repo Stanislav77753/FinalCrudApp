@@ -3,7 +3,6 @@ package main.java.com.airtickets.view.command.loginmenu;
 
 import main.java.com.airtickets.controller.FlightController;
 import main.java.com.airtickets.controller.RouteController;
-import main.java.com.airtickets.exceptions.CloseCommandException;
 import main.java.com.airtickets.exceptions.EntityNotExistsException;
 import main.java.com.airtickets.exceptions.FileEmptyException;
 import main.java.com.airtickets.exceptions.IncorrectCommandException;
@@ -12,7 +11,7 @@ import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
 import main.java.com.airtickets.view.command.Commands;
 
-public class CreateFlightCommand implements LoginCommand {
+public class CreateFlightCommand extends LoginCommand {
     private User user;
     private RouteController routeController = new RouteController();
     private FlightController flightController = new FlightController();
@@ -22,26 +21,25 @@ public class CreateFlightCommand implements LoginCommand {
     }
 
     @Override
-    public void execute() throws IncorrectCommandException, CloseCommandException {
-        if(!user.getRoleId().equals(new Integer("1"))){
-            throw new IncorrectCommandException("Incorrect command");
+    public void execute() throws IncorrectCommandException{
+        if(checkRole(user)){
+            String[] route;
+            boolean chechFlag = true;
+            do{
+                try {
+                    route = routeController.getRouteByName(ConsoleHelper.enterEntityParametrs(Commands.ROUTE)).
+                            split(",");
+                    flightController.createFlight(new Flight(null, ConsoleHelper.enterEntityParametrs(Commands.DATE),
+                            new Long(route[0])));
+                    chechFlag = false;
+                } catch (EntityNotExistsException e) {
+                    System.out.println(e.getMessage());
+                } catch (FileEmptyException e) {
+                    System.out.println(e.getMessage());
+                }
+            }while (chechFlag);
+        }else{
+            throw new IncorrectCommandException("\u001B[31m" + "YOU DON'T HAVE THE RIGHTS");
         }
-        String[] route;
-        boolean chechFlag = true;
-        do{
-            try {
-                route = routeController.getRouteByName(ConsoleHelper.enterEntityParametrs(Commands.RouteName)).
-                        split(",");
-                flightController.createFlight(new Flight(null, ConsoleHelper.enterEntityParametrs(Commands.Date),
-                        new Long(route[0])));
-                chechFlag = false;
-            } catch (EntityNotExistsException e) {
-                System.out.println(e.getMessage());
-            } catch (FileEmptyException e) {
-                System.out.println(e.getMessage());
-            }
-        }while (chechFlag);
     }
-
-
 }

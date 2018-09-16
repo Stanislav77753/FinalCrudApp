@@ -10,12 +10,12 @@ public class Validator {
     public static boolean checkName(String name) throws IncorrectEntityException, CloseCommandException {
         boolean checkFlag = true;
         if(name.equals("cancel")){
-            throw new CloseCommandException("You canceled \"registration\" operation");
+            throw new CloseCommandException("cancel");
         }else{
             String[] strName = name.split("");
             for(int i = 0; i < strName.length; i++){
                 if(!strName[i].matches("^\\D")){
-                    throw new IncorrectEntityException("You entered not valid ");
+                    throw new IncorrectEntityException("\u001B[31m" + "YOU ENTERED NOT VALID ");
                 }
             }
         }
@@ -28,7 +28,7 @@ public class Validator {
             throw new CloseCommandException("cancel");
         }else{
             if(password.length() < 8){
-                throw new IncorrectEntityException("Tou entered not valid password");
+                throw new IncorrectEntityException("\u001B[31m" + "YOU ENTERED NOT VALID PASSWORD");
             }
         }
         return checkFlag;
@@ -65,9 +65,10 @@ public class Validator {
                     }
                 }
             }else{
-                throw new IncorrectEntityException("You entered not valid login");
+                throw new IncorrectEntityException("\u001B[31m" + "YOU ENTERED NOT VALID LOGIN");
             }
         }
         return checkFlag;
     }
+
 }

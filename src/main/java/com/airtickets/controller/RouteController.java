@@ -21,4 +21,8 @@ public class RouteController {
     public String getRouteByName(String routeName) throws EntityNotExistsException, FileEmptyException {
         return routeService.getRouteByName(routeName);
     }
+
+    public Long getIdByRouteName(String routeName)throws EntityNotExistsException, FileEmptyException{
+        return routeService.getIdByRouteName(routeName);
+    }
 }
