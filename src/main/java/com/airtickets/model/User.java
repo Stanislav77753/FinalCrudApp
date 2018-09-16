@@ -76,6 +76,10 @@ public class User extends NamedEntity {
         this.balance += price;
     }
 
+    public void deleteTicket(Long ticketId){
+        ticketsId.remove(ticketId);
+    }
+
     @Override
     public String toString() {
         return "User{" +

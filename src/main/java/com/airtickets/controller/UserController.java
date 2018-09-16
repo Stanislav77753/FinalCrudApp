@@ -1,6 +1,7 @@
 package main.java.com.airtickets.controller;
 
 import main.java.com.airtickets.exceptions.FileEmptyException;
+import main.java.com.airtickets.model.Ticket;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.service.UserService;
 
@@ -29,7 +30,4 @@ public class UserController {
         userService.updateUser(user);
     }
 
-    public List<String> getAllTicketts(){
-        return userService.getAllTickets();
-    }
 }

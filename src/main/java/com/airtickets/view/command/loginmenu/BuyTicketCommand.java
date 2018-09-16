@@ -9,7 +9,6 @@ import main.java.com.airtickets.model.Ticket;
 import main.java.com.airtickets.model.User;
 import main.java.com.airtickets.view.ConsoleHelper;
 import main.java.com.airtickets.view.command.Commands;
-
 import java.util.List;
 
 public class BuyTicketCommand extends LoginCommand {
@@ -57,8 +56,10 @@ public class BuyTicketCommand extends LoginCommand {
         try {
             List<String> tickets = ticketController.getAllTickets();
             for(String ticket: tickets){
-                id++;
+                String[] ticketArray = ticket.split(",");
+                id = new Long(ticketArray[0]);
             }
+            id++;
         } catch (FileEmptyException e) {
             id = 1L;
         }
@@ -66,10 +67,10 @@ public class BuyTicketCommand extends LoginCommand {
     }
 
     private void createTicket() throws CloseCommandException {
-        String route = selectTicketParametr(Commands.ROUTE, routeController, flightController);
-        String date = selectTicketParametr(Commands.DATE, routeController, flightController);
+        String route = selectTicketParametr(Commands.ROUTE);
+        String date = selectTicketParametr(Commands.DATE);
         try {
-            String ticketType = selectTypeTicket(route, date, routeController, flightController);
+            String ticketType = selectTypeTicket(route, date);
             Double price = getPrice(ticketType, route);
             if(checkBalance(price)){
                 Ticket ticket = new Ticket(getIdForTicket(),date, flightController.getId(date,
@@ -107,6 +108,121 @@ public class BuyTicketCommand extends LoginCommand {
             }
         } catch (FileEmptyException e) {
         }
+    }
+
+    private String selectTicketParametr(Commands command) throws CloseCommandException {
+        String parametr;
+        do{
+            try{
+                parametr = ConsoleHelper.enterEntityParametrs(command);
+                if(parametr.equals("cancel")){
+                    throw new CloseCommandException("cancel");
+                }else if(command == Commands.ROUTE){
+                    if(checkRoute(parametr)){
+                        return parametr;
+                    }else{
+                        throw new IncorrectEntityException("\u001B[31m" + "THIS ROUTE IS NOT EXISTS");
+                    }
+                } else if(command == Commands.DATE){
+                    if(checkDate(parametr)){
+                        return parametr;
+                    }else{
+                        throw new IncorrectEntityException("\u001B[31m" + "THE FLIGHT ON THIS DATE IS NOT EXISTS");
+                    }
+                }
+            } catch (IncorrectEntityException e){
+                System.out.println(e.getMessage());
+            }
+        }while (true);
+    }
+
+    private String selectTypeTicket(String route, String date) throws CloseCommandException,
+            VacantTicketException {
+        String typeTicket;
+        do{
+            typeTicket = ConsoleHelper.enterEntityParametrs(Commands.TYPE_TICKET);
+            try {
+                if(checkType(typeTicket)){
+                    if(checkVacantSeats(typeTicket, route, date)){
+                        return typeTicket;
+                    }
+                }
+            } catch (IncorrectEntityException e) {
+                System.out.println(e.getMessage());
+            }
+        }while(true);
+    }
+
+    private boolean checkRoute(String route){
+        try {
+            List<String> routes = routeController.getAllRoutes();
+            for(String strRoute : routes){
+                String[] routeArray = strRoute.split(",");
+                if(route.equals(routeArray[1])){
+                    return true;
+                }
+            }
+        } catch (FileEmptyException e) {
+            return false;
+        }
+        return false;
+    }
+
+    private boolean checkDate(String date){
+        try {
+            List<String> flights = flightController.getAllFlights();
+            for(String flight: flights){
+                String[] flightArray = flight.split(",");
+                if(date.equals(flightArray[1])){
+                    return true;
+                }
+            }
+        } catch (FileEmptyException e) {
+            return false;
+        }
+        return  false;
+    }
+
+    private boolean checkType(String typeTicket) throws CloseCommandException, IncorrectEntityException {
+        if(typeTicket.equals("cancel")){
+            throw new CloseCommandException("cancel");
+        }else if(typeTicket.equals("economy") || typeTicket.equals("business")){
+            return true;
+        }else{
+            throw new IncorrectEntityException("\u001B[31m" + "TOU ENTERED INCORRECT TYPE OF SEATS");
+        }
+    }
+
+    private boolean checkVacantSeats(String typeTicket, String route, String date) throws VacantTicketException {
+        try {
+            List<String> flights = flightController.getAllFlights();
+            String[] routeArray = routeController.getRouteByName(route).split(",");
+            for(String flight: flights){
+                String[] flightArray = flight.split(",");
+                if(date.equals(flightArray[1]) && routeArray[0].equals(flightArray[2])){
+                    if(typeTicket.equals("economy")){
+                        if(new Integer(flightArray[3]) < new Integer(routeArray[2])){
+                            return true;
+                        }
+                        else{
+                            throw new VacantTicketException("\u001B[31m" + "NO VACANT SEATS");
+                        }
+                    }else{
+                        if(new Integer(flightArray[4]) < new Integer(routeArray[3])){
+                            return true;
+                        }
+                        else{
+                            throw new VacantTicketException("\u001B[31m" + "NO VACANT SEATS");
+                        }
+                    }
+                }
+            }
+        } catch (FileEmptyException e) {
+            e.printStackTrace();
+        } catch (EntityNotExistsException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

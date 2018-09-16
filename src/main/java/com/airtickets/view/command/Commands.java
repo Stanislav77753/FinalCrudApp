@@ -3,6 +3,7 @@ package main.java.com.airtickets.view.command;
 public enum Commands {
     COMMAND("Enter command:"),
     LOGIN("Enter your login.For cancel enter \"cancel\""),
+    ID("Enter id of ticket.For cancel enter \"cancel\""),
     PASSWORD("Enter password from more 8 symbols. For cancel enter \"cancel\""),
     NAME("Enter name. NAME mustn't have numerals. For cancel enter \"cancel\""),
     LAST_NAME("Enter Last name. Last name mustn't have numerals. For cancel enter \"cancel\""),

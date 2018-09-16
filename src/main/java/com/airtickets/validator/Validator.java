@@ -22,6 +22,20 @@ public class Validator {
         return checkFlag;
     }
 
+    public static boolean checkId(String id) throws IncorrectEntityException, CloseCommandException{
+        boolean checkFlag = true;
+        if(id.equals("cancel")){
+            throw new CloseCommandException("cancel");
+        }else{
+            String[] strName = id.split("");
+            for(int i = 0; i < strName.length; i++){
+                if(strName[i].matches("^\\D")){
+                    throw new IncorrectEntityException("\u001B[31m" + "YOU ENTERED NOT VALID ");
+                }
+            }
+        }
+        return checkFlag;
+    }
     public static boolean checkPassword(String password) throws IncorrectEntityException, CloseCommandException {
         boolean checkFlag = true;
         if(password.equals("cancel")){

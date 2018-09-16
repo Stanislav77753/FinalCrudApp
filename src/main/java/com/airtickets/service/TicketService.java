@@ -16,4 +16,12 @@ public class TicketService {
     public List<String> getAllTickets() throws FileEmptyException {
         return ticketRepositoryImp.getAllTickets();
     }
+
+    public Ticket getTicketById(Long id){
+        return ticketRepositoryImp.getById(id);
+    }
+
+    public void deleteTicket(Ticket ticket){
+        ticketRepositoryImp.delete(ticket);
+    }
 }

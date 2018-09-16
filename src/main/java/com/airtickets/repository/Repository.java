@@ -11,7 +11,7 @@ public interface Repository<T, ID> {
     void save(T t);
     void delete(T t);
     void update(T t);
-    T getById(ID id);
+    T getById(ID id) throws FileEmptyException;
 
     default List<String> getAll(File fileName) throws FileEmptyException{
         List<String> entityList = new ArrayList<>();
